@@ -4,41 +4,35 @@
 // #include "al/core.hpp"
 
 // for devel branch
+#include <iostream>
+
 #include "al/app/al_App.hpp"
 #include "al/graphics/al_Shapes.hpp"
 
-using namespace al;
+#include "IO.hpp"
+#include "Mixer.hpp"
 
-struct MyApp : App {
-  Mesh mesh;
-  double phase = 0;
+struct MyApp : al::App {
+
+  Mixer mMixer; 
 
   void onCreate() override {
-    addTetrahedron(mesh);
-    lens().near(0.1).far(25).fovy(45);
-    nav().pos(0, 0, 4);
-    nav().quat().fromAxisAngle(0. * M_2PI, 0, 1, 0);
   }
 
   void onAnimate(double dt) override {
-    double period = 10;
-    phase += dt / period;
-    if (phase >= 1.) phase -= 1.;
   }
 
-  void onDraw(Graphics& g) override {
-    g.clear(0, 0, 0);
-    g.polygonLine();
-    g.pushMatrix();
-    g.rotate(phase * 360, 0, 1, 0);
-    g.color(1);
-    g.draw(mesh);
-    g.popMatrix();
+  void onDraw(al::Graphics& g) override {
+  }
+
+  void onSound(al::AudioIOData& io) override {
+    mMixer.onProcess(io);
   }
 };
 
 int main() {
   MyApp app;
   app.dimensions(600, 400);
+  app.configureAudio(AUDIO_RATE, AUDIO_BLOCK_SIZE, AUDIO_OUTPUTS, AUDIO_INPUTS);
   app.start();
 }

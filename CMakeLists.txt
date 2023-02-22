@@ -6,10 +6,17 @@ project(allotester)
 set(APP_NAME app)
 
 # path to main source file
-add_executable(${APP_NAME} src/main.cpp)
+add_executable(${APP_NAME} 
+  src/main.cpp
+  src/Mixer.cpp
+  src/Track.cpp
+)
 
 # add allolib as a subdirectory to the project
 add_subdirectory(allolib)
+
+# simplify target_include_directories
+include_directories(include)
 
 # link allolib to project
 target_link_libraries(${APP_NAME} PRIVATE al)
