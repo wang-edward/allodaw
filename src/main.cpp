@@ -22,8 +22,8 @@ struct MyApp : al::App {
     Track t;
    
     auto ptr_tester = std::make_unique<test>();
-    t.mPlugins.emplace_back(std::make_unique<test>());
-    t.mPlugins.emplace_back(std::move(ptr_tester));
+    // t.mPlugins.emplace_back(std::make_unique<test>());
+    // t.mPlugins.emplace_back(std::move(ptr_tester));
 
     // works before this
 
