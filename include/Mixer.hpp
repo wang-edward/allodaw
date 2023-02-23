@@ -8,8 +8,5 @@
 
 class Mixer {
  public:
-  Mixer();
-  Mixer(std::vector<Track> tracks);
-  void onProcess(al::AudioIOData& io);
   std::vector<Track> mTracks;
 };

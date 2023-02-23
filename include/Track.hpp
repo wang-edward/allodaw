@@ -6,23 +6,23 @@
 
 #include "IO.hpp"
 #include "Plugin.hpp"
-#include "Source.hpp"
 
 typedef std::unique_ptr<Plugin> up_Plugin; 
 
 class Track {
  public:
   Track();
+  Track(const Track& t);
   // Track(std::vector<up_Plugin> plugins);
   void calculateBuffer();
   float operator()(); 
- private:
-  bool inRange();
-  bool advance();
-  Source mSource;
-  int mPos;
+ // private:
+  // bool inRange();
+  // bool advance();
+  up_Plugin mSource;
+  // int mPos;
   std::vector< up_Plugin > mPlugins;
-  float mBuffer[AUDIO_BLOCK_SIZE] = { 0 };  
+  // float mBuffer[AUDIO_BLOCK_SIZE] = { 0 };  
 };
 
 /// Utility function to efficiently clear buffer (set all to 0)
