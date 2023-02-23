@@ -8,6 +8,8 @@ set(APP_NAME app)
 # path to main source file
 add_executable(${APP_NAME} 
   src/main.cpp
+  src/Plugin.cpp
+  src/test.cpp
   # src/Mixer.cpp
   # src/Track.cpp
 )

@@ -7,12 +7,18 @@
 #include "IO.hpp"
 #include "Plugin.hpp"
 
-typedef std::unique_ptr<Plugin> up_Plugin; 
 
 class Track {
  public:
-  Track();
-  Track(const Track& t);
+  Track() = default;
+  Track(const Track& t) : mSource(t.mSource->clone()) {
+    for (const up_Plugin &p : t.mPlugins) {
+      mPlugins.push_back(p);
+    }
+      // for (const up_Plugin p : t.mPlugins) {
+    //   
+    // }
+  }
   // Track(std::vector<up_Plugin> plugins);
   void calculateBuffer();
   float operator()(); 
