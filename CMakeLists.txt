@@ -11,7 +11,7 @@ add_executable(${APP_NAME}
   src/Plugin.cpp
   src/test.cpp
   # src/Mixer.cpp
-  # src/Track.cpp
+  src/Track.cpp
 )
 
 # add allolib as a subdirectory to the project

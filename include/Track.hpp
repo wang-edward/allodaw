@@ -11,24 +11,12 @@
 class Track {
  public:
   Track() = default;
-  Track(const Track& t) : mSource(t.mSource->clone()) {
-    for (const up_Plugin &p : t.mPlugins) {
-      mPlugins.push_back(p);
-    }
-      // for (const up_Plugin p : t.mPlugins) {
-    //   
-    // }
-  }
-  // Track(std::vector<up_Plugin> plugins);
+  Track(const Track& t); 
   void calculateBuffer();
   float operator()(); 
- // private:
-  // bool inRange();
-  // bool advance();
+
   up_Plugin mSource;
-  // int mPos;
   std::vector< up_Plugin > mPlugins;
-  // float mBuffer[AUDIO_BLOCK_SIZE] = { 0 };  
 };
 
 /// Utility function to efficiently clear buffer (set all to 0)
