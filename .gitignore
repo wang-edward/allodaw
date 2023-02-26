@@ -1,6 +1,7 @@
 # anything named bin or build
 bin
 build
+.cache
 
 # ignore potentially big files
 *.log
