@@ -11,7 +11,7 @@ typedef std::unique_ptr<Plugin> up_Plugin;
 
 class Track {
  public:
-  Track();
+  Track() {};
   Track(const Track& t);
   // Track(std::vector<up_Plugin> plugins);
   void calculateBuffer();

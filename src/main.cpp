@@ -13,50 +13,71 @@
 #include "Mixer.hpp"
 
 
-class test : public Plugin {
+class CustomPlugin : public Plugin {
 public:
-  test(int n = 0) {
+  CustomPlugin(int n = 0) {
     num = n;
   }
-  test(const test &t) {
-    num = t.num;
+  CustomPlugin(const CustomPlugin &p) {
+    num = p.num;
   }
-  test (test &&t) {
-    num = t.num;
+  CustomPlugin (CustomPlugin &&p) {
+    num = p.num;
   }
 
-  ~test() {
+  ~CustomPlugin() {
     std::cout<<"inherit destroyed!"<<std::endl;
   }
 
   void out(std::array<float, AUDIO_BLOCK_SIZE> v[]) override {
-    for (int i=0;i<v->size();i++) {
-      std::cout<<(*v)[i]<<std::endl;
-    }
+    std::cout<<"Custom Plugin"<<std::endl;
   }
 
   int num;
 };
 
+class Custom2 : public Plugin {
+ public:
+  Custom2(int n=2) {
+     num = n;
+  }
+  Custom2(const Custom2 &p) {
+     num = p.num;
+  }
+  Custom2(Custom2 &&p) {
+     num = p.num;
+  }
+  ~Custom2() {
+    std::cout<<"custom2 destroyed"<<std::endl;
+  }
+  void out(std::array<float, AUDIO_BLOCK_SIZE> v[]) override {
+    std::cout<<"Custom 2"<<std::endl;
+  }
+
+   int num;
+};
+
 struct MyApp : al::App {
 
   Mixer mMixer; 
-  test t;
+  CustomPlugin t;
 
   void onCreate() override {
-    // Track t;
+    Track t;
     // t.mPlugins.emplace_back(std::make_unique<up_Plugin>());
     // mMixer.mTracks.emplace_back(t);
-    auto bro = std::make_unique<test>(2);
-    auto guy = std::make_unique<test>(1);
-    std::vector<std::unique_ptr<test> > mVec;
+    auto bro = std::make_unique<CustomPlugin>(2);
+    auto guy = std::make_unique<Custom2>(1);
+    std::vector<std::unique_ptr<Plugin> > mVec;
     mVec.emplace_back(std::move(bro)); // explicit move
     mVec.emplace_back(std::move(guy)); // explicit move
+                                       //
+    std::array<float,AUDIO_BLOCK_SIZE> dummy;
     for (auto &x : mVec) {
-      std::cout<<x->num<<std::endl;
+      x->out(&dummy);
     }
 
-    std::cout<<bro->num<<std::endl; // should segfault 
+    // std::cout<<bro->num<<std::endl; // should segfault 
 
     // mVec.emplace_back(bro); // implicit move
   }
