@@ -22,7 +22,7 @@ class Track {
   up_Plugin mSource;
   // int mPos;
   std::vector< up_Plugin > mPlugins;
-  // float mBuffer[AUDIO_BLOCK_SIZE] = { 0 };  
+  float mBuffer[AUDIO_BLOCK_SIZE] = { 0 };  
 };
 
 /// Utility function to efficiently clear buffer (set all to 0)

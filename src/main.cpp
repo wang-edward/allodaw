@@ -6,9 +6,6 @@
 // for devel branch
 #include <iostream>
 
-#include "al/app/al_App.hpp"
-#include "al/graphics/al_Shapes.hpp"
-
 #include "IO.hpp"
 #include "Mixer.hpp"
 
@@ -57,45 +54,27 @@ class Custom2 : public Plugin {
    int num;
 };
 
-struct MyApp : al::App {
+int main() {
 
   Mixer mMixer; 
-  CustomPlugin t;
 
-  void onCreate() override {
-    Track t;
-    // t.mPlugins.emplace_back(std::make_unique<up_Plugin>());
-    // mMixer.mTracks.emplace_back(t);
-    auto bro = std::make_unique<CustomPlugin>(2);
-    auto guy = std::make_unique<Custom2>(1);
-    std::vector<std::unique_ptr<Plugin> > mVec;
-    mVec.emplace_back(std::move(bro)); // explicit move
-    mVec.emplace_back(std::move(guy)); // explicit move
-                                       //
-    std::array<float,AUDIO_BLOCK_SIZE> dummy;
-    for (auto &x : mVec) {
-      x->out(&dummy);
-    }
+  Track t;
+  // t.mPlugins.emplace_back(std::make_unique<up_Plugin>()); // doesnt work
+  // mMixer.mTracks.emplace_back(t); // cant define copy constructor of Track 
+  auto bro = std::make_unique<CustomPlugin>(2);
+  auto guy = std::make_unique<Custom2>(1);
+  std::vector<std::unique_ptr<Plugin> > mVec;
+  mVec.emplace_back(std::move(bro)); // explicit move
+  mVec.emplace_back(std::move(guy)); // explicit move
 
-    // std::cout<<bro->num<<std::endl; // should segfault 
-
-    // mVec.emplace_back(bro); // implicit move
+  std::array<float,AUDIO_BLOCK_SIZE> dummy;
+  for (auto &x : mVec) {
+    x->out(&dummy);
   }
 
-  void onAnimate(double dt) override {
-  }
+  // std::cout<<bro->num<<std::endl; // should segfault 
 
-  void onDraw(al::Graphics &g) override {
-  }
+  // mVec.emplace_back(bro); // implicit move
 
-  void onSound(al::AudioIOData &io) override {
-    // mMixer.onProcess(io);
-  }
-};
 
-int main() {
-  MyApp app;
-  app.dimensions(600, 400);
-  app.configureAudio(AUDIO_RATE, AUDIO_BLOCK_SIZE, AUDIO_OUTPUTS, AUDIO_INPUTS);
-  app.start();
 }

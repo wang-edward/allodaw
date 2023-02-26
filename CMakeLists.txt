@@ -9,7 +9,7 @@ set(APP_NAME app)
 add_executable(${APP_NAME} 
   src/main.cpp
   # src/Mixer.cpp
-  # src/Track.cpp
+  src/Track.cpp
 )
 
 # add allolib as a subdirectory to the project
