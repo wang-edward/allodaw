@@ -27,7 +27,7 @@ struct MyApp : al::App {
 
     // works before this
 
-    mMixer.mTracks.emplace_back(t);
+    // mMixer.mTracks.emplace_back(t);
     
     // auto bro = std::make_unique<test>(2);
     // auto guy = std::make_unique<test>(1);
